@@ -15,10 +15,10 @@
 #define ARIANE_UART_ADDR			0x3002000
 #define ARIANE_UART_FREQ			50000000
 #define ARIANE_UART_BAUDRATE			115200
-#define ARIANE_UART_REG_SHIFT			0
-#define ARIANE_UART_REG_WIDTH			1
+#define ARIANE_UART_REG_SHIFT			2
+#define ARIANE_UART_REG_WIDTH			4
 #define ARIANE_PLIC_ADDR			0x4000000
-#define ARIANE_PLIC_NUM_SOURCES			3
+#define ARIANE_PLIC_NUM_SOURCES			51
 #define ARIANE_HART_COUNT			1
 #define ARIANE_CLINT_ADDR			0x2040000
 #define ARIANE_ACLINT_MTIMER_FREQ		1000000
@@ -58,11 +58,13 @@ static struct aclint_mtimer_data mtimer = {
  */
 static int ariane_console_init(void)
 {
-	return altera_uart_init(ARIANE_UART_ADDR,
+	return uart8250_init(ARIANE_UART_ADDR,
 			     ARIANE_UART_FREQ,
 			     ARIANE_UART_BAUDRATE,
 			     ARIANE_UART_REG_SHIFT,
-			     ARIANE_UART_REG_WIDTH);
+			     ARIANE_UART_REG_WIDTH,
+			     0,
+			     0);
 }
 
 /*
