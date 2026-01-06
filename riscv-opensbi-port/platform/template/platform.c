@@ -105,9 +105,10 @@ static int ariane_final_init(bool cold_boot)
 		err = fdt_setprop_u32(fdt, noff, "riscv,ndev", ARIANE_PLIC_NUM_SOURCES);
 		if (err < 0) {
 			sbi_printf("Platform fixup: failed to set riscv,ndev (err=%d)\n", err);
-		} else {
-			sbi_printf("Platform fixup: successfully set riscv,ndev to %d\n", ARIANE_PLIC_NUM_SOURCES);
 		}
+		//else {
+		//	sbi_printf("Platform fixup: successfully set riscv,ndev to %d\n", ARIANE_PLIC_NUM_SOURCES);
+		//}
 	}
 
 	return 0;

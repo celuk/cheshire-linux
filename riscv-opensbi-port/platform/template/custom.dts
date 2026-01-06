@@ -7,21 +7,21 @@
 	compatible = "eth,cheshire-dev";
   	model = "eth,cheshire";
 
-	aliases {
-		serial0 = &hvc;
-	};
+	// aliases {
+	// 	serial0 = &hvc;
+	// };
 
-	chosen {
-		bootargs = "console=hvc0 earlycon=sbi";
-		stdout-path = "serial0";
-	};
+	// chosen {
+	// 	bootargs = "console=hvc0 earlycon=sbi";
+	// 	stdout-path = "serial0";
+	// };
 
-	// chosen: chosen {
-    //   #address-cells = <2>;
-    //   #size-cells = <2>;
-    //   ranges;
-    //   stdout-path = "/soc/serial@3002000:115200";
-    // };
+	chosen: chosen {
+      #address-cells = <2>;
+      #size-cells = <2>;
+      ranges;
+      stdout-path = "/soc/serial@3002000:115200";
+    };
 
 	cpus {
       #address-cells = <1>;
@@ -83,7 +83,7 @@
       };
     };
 
-	hvc: sbi-hvc {
-		compatible = "riscv,sbi-hvc";
-	};
+	// hvc: sbi-hvc {
+	// 	compatible = "riscv,sbi-hvc";
+	// };
 };
