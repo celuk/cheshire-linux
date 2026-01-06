@@ -1,0 +1,56 @@
+/dts-v1/;
+
+/ {
+	#address-cells = <1>;
+	#size-cells = <1>;
+	compatible = "riscv-soc";
+	model = "CVA6-SoC";
+
+	aliases {
+		serial0 = &hvc;
+	};
+
+	chosen {
+		bootargs = "console=hvc0 earlycon=sbi";
+		stdout-path = "serial0";
+	};
+
+	cpus {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		timebase-frequency = <1000000>;
+
+		cpu@0 {
+			device_type = "cpu";
+			reg = <0>;
+			status = "okay";
+			compatible = "riscv";
+			riscv,isa = "rv32imac";
+			mmu-type = "riscv,sv32";
+			clock-frequency = <50000000>;
+
+			intc: interrupt-controller {
+				#interrupt-cells = <1>;
+				#address-cells = <0>;
+				#size-cells = <0>;
+				interrupt-controller;
+				compatible = "riscv,cpu-intc";
+			};
+		};
+	};
+
+	memory@80000000 {
+		device_type = "memory";
+		reg = <0x80000000 0x40000000>;
+	};
+
+	clint@ff080000 {
+		compatible = "riscv,clint0";
+		reg = <0xff080000 0x10000>;
+		interrupts-extended = <&intc 3 &intc 7>;
+	};
+
+	hvc: sbi-hvc {
+		compatible = "riscv,sbi-hvc";
+	};
+};
