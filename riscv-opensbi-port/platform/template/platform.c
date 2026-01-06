@@ -5,6 +5,7 @@
 #include <sbi/sbi_const.h>
 #include <sbi/sbi_hart.h>
 #include <sbi/sbi_platform.h>
+#include <libfdt.h>
 #include <sbi_utils/fdt/fdt_helper.h>
 #include <sbi_utils/fdt/fdt_fixup.h>
 #include <sbi_utils/ipi/aclint_mswi.h>
@@ -84,12 +85,30 @@ static int ariane_early_init(bool cold_boot)
 static int ariane_final_init(bool cold_boot)
 {
 	void *fdt;
+	int noff;
 
 	if (!cold_boot)
 		return 0;
 
 	fdt = (void *)fdt_get_address();
+
+	/* Run generic fixups first so the FDT has room for new properties */
 	fdt_fixups(fdt);
+
+	noff = fdt_path_offset(fdt, "/soc/interrupt-controller@4000000");
+	if (noff < 0) {
+		sbi_printf("Platform fixup: PLIC node not found (err=%d)\n", noff);
+	} else {
+		int err;
+
+		/* Use the helper to write a single-cell u32 property */
+		err = fdt_setprop_u32(fdt, noff, "riscv,ndev", ARIANE_PLIC_NUM_SOURCES);
+		if (err < 0) {
+			sbi_printf("Platform fixup: failed to set riscv,ndev (err=%d)\n", err);
+		} else {
+			sbi_printf("Platform fixup: successfully set riscv,ndev to %d\n", ARIANE_PLIC_NUM_SOURCES);
+		}
+	}
 
 	return 0;
 }

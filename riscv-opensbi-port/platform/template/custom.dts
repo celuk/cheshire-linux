@@ -72,7 +72,7 @@
         reg = <0x0 0x2040000 0x0 0x040000>;
       };
       PLIC0: interrupt-controller@4000000 {
-        compatible = "riscv,plic0";
+        compatible = "riscv,plic0", "sifive,plic-1.0.0";
         #address-cells = <0>;
         #interrupt-cells = <1>;
         interrupt-controller;
