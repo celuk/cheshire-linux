@@ -20,6 +20,7 @@
       #address-cells = <2>;
       #size-cells = <2>;
       ranges;
+	  bootargs = "console=ttyS0,115200n8 earlycon=uart8250,mmio32,0x3002000,115200n8";
       stdout-path = "/soc/serial@3002000:115200";
     };
 
