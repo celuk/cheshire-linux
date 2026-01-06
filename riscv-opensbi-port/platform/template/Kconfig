@@ -9,7 +9,9 @@
 #
 config PLATFORM_TEMPLATE
 	bool
+	select FDT
 	select IPI_MSWI
+	select IRQCHIP_PLIC
 	select TIMER_MTIMER
-	select SERIAL_CUSTOM_UART
+	select SERIAL_UART8250
 	default y

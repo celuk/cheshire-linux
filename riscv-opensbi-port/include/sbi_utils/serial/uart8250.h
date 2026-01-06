@@ -17,4 +17,7 @@
 int uart8250_init(unsigned long base, u32 in_freq, u32 baudrate, u32 reg_shift,
 		  u32 reg_width, u32 reg_offset, u32 caps);
 
+int altera_uart_init(unsigned long base, u32 in_freq, u32 baudrate, u32 reg_shift,
+		  u32 reg_width);
+
 #endif
