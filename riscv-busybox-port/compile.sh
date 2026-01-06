@@ -1,9 +1,10 @@
 #!/bin/bash
 
 sudo rm -rf ./_install ./rootfs.cpio.gz;
+make distclean;
 make defconfig;
 sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' .config;
-export CROSS_COMPILE=/media/shc/0EDEBC4906059163/tools/riscv-toolchain-linux/_install/bin/riscv32-unknown-linux-gnu-;
+export CROSS_COMPILE=/media/shc/0EDEBC4906059163/tools/riscv-toolchain-linux/_install/bin/riscv64-unknown-linux-gnu-;
 make -j14;
 make install;
 cd _install;
@@ -17,7 +18,7 @@ echo 'mount -t proc none /proc' >> ./etc/init.d/rcS
 echo 'mount -t sysfs none /sys' >> ./etc/init.d/rcS
 echo 'echo " "' >> ./etc/init.d/rcS
 echo 'echo "##################################"' >> ./etc/init.d/rcS
-echo 'echo "#   CustomSoC Linux Booted!      #"' >> ./etc/init.d/rcS
+echo 'echo "#    Cheshire Linux Booted!      #"' >> ./etc/init.d/rcS
 echo 'echo "##################################"' >> ./etc/init.d/rcS
 echo 'echo " "' >> ./etc/init.d/rcS
 echo 'echo "Starting shell..."' >> ./etc/init.d/rcS
