@@ -88,7 +88,7 @@ static inline void switch_mm(struct mm_struct *prev,
 		 * name to support binutils 2.29 which doesn't know about the
 		 * privileged ISA 1.10 yet.
 		 */
-		csr_write(sptbr, virt_to_pfn(next->pgd) | SATP_MODE);
+		csr_write(satp, virt_to_pfn(next->pgd) | SATP_MODE);
 		local_flush_tlb_all();
 
 		flush_icache_deferred(next);
