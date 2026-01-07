@@ -20,9 +20,9 @@
       #address-cells = <2>;
       #size-cells = <2>;
       ranges;
-	  bootargs = "console=ttyS0,115200n8 earlycon=uart8250,mmio32,0x3002000,115200n8";
-      stdout-path = "/soc/serial@3002000:115200";
+      stdout-path = "/soc/serial@3002000:921600";
     };
+	// bootargs = "console=ttyS0,921600 earlycon=sbi";
 
 	cpus {
       #address-cells = <1>;
@@ -59,7 +59,7 @@
       serial@3002000 {
         compatible = "ns16550a";
         clock-frequency = <50000000>; // 50 MHz
-        current-speed = <115200>;
+        current-speed = <921600>;
         interrupt-parent = <&PLIC0>;
         interrupts = <1>;
         reg = <0x0 0x3002000 0x0 0x1000>;
