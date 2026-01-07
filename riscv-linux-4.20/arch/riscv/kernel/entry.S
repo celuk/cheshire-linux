@@ -89,7 +89,7 @@ _save_context:
 	REG_L s0, TASK_TI_USER_SP(tp)
 	csrrc s1, sstatus, t0
 	csrr s2, sepc
-	csrr s3, stval
+	csrr s3, sbadaddr
 	csrr s4, scause
 	csrr s5, sscratch
 	REG_S s0, PT_SP(sp)

@@ -245,7 +245,7 @@ vmalloc_fault:
 		 * the privileged ISA 1.10 yet.
 		 */
 		index = pgd_index(addr);
-		pgd = (pgd_t *)pfn_to_virt(csr_read(satp)) + index;
+		pgd = (pgd_t *)pfn_to_virt(csr_read(sptbr)) + index;
 		pgd_k = init_mm.pgd + index;
 
 		if (!pgd_present(*pgd_k))
