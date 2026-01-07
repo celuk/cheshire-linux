@@ -64,6 +64,14 @@ clear_bss_done:
 
 	/* Initialize page tables and relocate to virtual addresses */
 	la sp, init_thread_union + THREAD_SIZE
+
+	/* Calculate load address */
+1:	auipc t0, 0
+	la t1, 1b
+	la t2, _start
+	sub t1, t1, t2
+	sub a0, t0, t1
+
 	call setup_vm
 	call relocate
 

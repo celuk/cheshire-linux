@@ -129,11 +129,10 @@ pmd_t swapper_pmd[PTRS_PER_PMD*((-PAGE_OFFSET)/PGDIR_SIZE)] __page_aligned_bss;
 pmd_t trampoline_pmd[PTRS_PER_PGD] __initdata __aligned(PAGE_SIZE);
 #endif
 
-asmlinkage void __init setup_vm(void)
+asmlinkage void __init setup_vm(uintptr_t load_pa)
 {
-	extern char _start;
 	uintptr_t i;
-	uintptr_t pa = (uintptr_t) &_start;
+	uintptr_t pa = load_pa;
 	pgprot_t prot = __pgprot(pgprot_val(PAGE_KERNEL) | _PAGE_EXEC);
 
 	va_pa_offset = PAGE_OFFSET - pa;
@@ -190,13 +189,12 @@ static void __init setup_bootmem(void)
 			 * the kernel
 			 */
 			memblock_reserve(reg->base, vmlinux_end - reg->base);
-			mem_size = min(reg->size, (phys_addr_t)-PAGE_OFFSET);
 		}
 	}
-	BUG_ON(mem_size == 0);
+	// BUG_ON(mem_size == 0);
 
-	set_max_mapnr(PFN_DOWN(mem_size));
 	max_low_pfn = memblock_end_of_DRAM();
+	set_max_mapnr(max_low_pfn);
 
 #ifdef CONFIG_BLK_DEV_INITRD
 	setup_initrd();
