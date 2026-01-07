@@ -8,8 +8,7 @@
   	model = "eth,cheshire";
 
 	aliases {
-		serial0 = &uart0;
-		serial1 = &hvc;
+		serial0 = &hvc;
 	};
 
 	chosen {
@@ -57,7 +56,7 @@
       #size-cells = <2>;
       compatible = "eth,cheshire-bare-soc", "simple-bus";
       ranges;
-      uart0: serial@3002000 {
+      serial@3002000 {
         compatible = "ns16550a";
         clock-frequency = <50000000>; // 50 MHz
         current-speed = <115200>;
