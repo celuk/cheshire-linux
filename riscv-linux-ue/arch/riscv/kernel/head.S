@@ -107,7 +107,7 @@ relocate:
 	srl a0, a0, PAGE_SHIFT
 	or a0, a0, a1
 	sfence.vma
-	csrw sptbr, a0
+	csrw satp, a0
 .align 2
 1:
 	/* Set trap vector to spin forever to help debug */
@@ -121,7 +121,7 @@ relocate:
 .option pop
 
 	/* Switch to kernel page tables */
-	csrw sptbr, a2
+	csrw satp, a2
 
 	ret
 

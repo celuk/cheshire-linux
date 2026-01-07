@@ -35,12 +35,20 @@ $(obj)/vdso.so.dbg: $(src)/vdso.lds $(obj-vdso) FORCE
 
 SYSCFLAGS_vdso.so.dbg = -shared -s -Wl,-soname=linux-vdso.so.1 \
                             $(call cc-ldoption, -Wl$(comma)--hash-style=both)
+SYSCFLAGS_vdso-dummy.o = $(SYSCFLAGS_vdso.so.dbg)
 $(obj)/vdso-dummy.o: $(src)/vdso.lds $(obj)/rt_sigreturn.o FORCE
 	$(call if_changed,vdsold)
 
-LDFLAGS_vdso-syms.o := -r -R
-$(obj)/vdso-syms.o: $(obj)/vdso-dummy.o FORCE
-	$(call if_changed,ld)
+quiet_cmd_vdso_syms = VDSOSYM $@
+      cmd_vdso_syms = $(NM) -D $(filter-out FORCE,$^) | \
+		       grep -E " __vdso_" | \
+		       sed 's/\([0-9a-f]*\) . \([^@]*\).*/\2 = 0x\1; .global \2;/' > $@
+
+$(obj)/vdso-syms.S: $(obj)/vdso-dummy.o FORCE
+	$(call if_changed,vdso_syms)
+
+$(obj)/vdso-syms.o: $(obj)/vdso-syms.S FORCE
+	$(call if_changed,as_o_S)
 
 # strip rule for the .so file
 $(obj)/%.so: OBJCOPYFLAGS := -S
