@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 .PHONY: all opensbi busybox linux
 
-all: opensbi busybox linux-ue
+all: opensbi busybox linux
 
 opensbi:
 	pushd riscv-opensbi-port && ./compile.sh && popd
