@@ -25,6 +25,8 @@ sudo mknod dev/console c 5 1;
 sudo mknod dev/null c 1 3;
 
 echo '#!/bin/sh' > ./etc/init.d/rcS
+#echo 'exec setsid cttyhack /bin/sh' >> ./etc/init.d/rcS
+#echo 'mount -t devtmpfs devtmpfs /dev' >> ./etc/init.d/rcS
 echo 'mount -t proc none /proc' >> ./etc/init.d/rcS
 echo 'mount -t sysfs none /sys' >> ./etc/init.d/rcS
 echo 'echo " "' >> ./etc/init.d/rcS
