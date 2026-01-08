@@ -7,6 +7,17 @@ sed -i 's/# CONFIG_STATIC is not set/CONFIG_STATIC=y/' .config;
 export CROSS_COMPILE=/media/shc/0EDEBC4906059163/tools/riscv-toolchain-linux/_install/bin/riscv64-unknown-linux-gnu-;
 make -j14;
 make install;
+
+# Copy lrzsz binaries if they exist
+if [ -f "../lrzsz/lrz" ] && [ -f "../lrzsz/lsz" ]; then
+    echo "Copying lrzsz binaries..."
+    cp ../lrzsz/lrz ./_install/bin/lrz
+    cp ../lrzsz/lsz ./_install/bin/lsz
+    chmod +x ./_install/bin/lrz ./_install/bin/lsz
+else
+    echo "Warning: lrzsz binaries not found at ../lrzsz/"
+fi
+
 cd _install;
 mkdir -p dev proc sys etc/init.d;
 #sudo rm -rf dev/console dev/null;
