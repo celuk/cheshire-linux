@@ -86,21 +86,32 @@ static int ariane_final_init(bool cold_boot)
 {
 	void *fdt;
 	int noff;
+	int err;
 
 	if (!cold_boot)
 		return 0;
 
 	fdt = (void *)fdt_get_address();
 
+	err = fdt_open_into(fdt, fdt, fdt_totalsize(fdt) + 512); // expand FDT by 512 bytes
+    if (err < 0) {
+        sbi_printf("Platform fixup: failed to expand FDT (err=%d)\n", err);
+        return 0;
+    }
+
+	err = fdt_add_mem_rsv(fdt, 0x80140000, 0x10000); // 64kb reserve for device tree
+	if (err < 0) {
+		sbi_printf("Platform fixup: failed to add mem rsv (err=%d)\n", err);
+	}
+	
 	/* Run generic fixups first so the FDT has room for new properties */
 	fdt_fixups(fdt);
 
 	noff = fdt_path_offset(fdt, "/soc/interrupt-controller@4000000");
 	if (noff < 0) {
 		sbi_printf("Platform fixup: PLIC node not found (err=%d)\n", noff);
-	} else {
-		int err;
-
+	}
+	else {
 		/* Use the helper to write a single-cell u32 property */
 		err = fdt_setprop_u32(fdt, noff, "riscv,ndev", ARIANE_PLIC_NUM_SOURCES);
 		if (err < 0) {
