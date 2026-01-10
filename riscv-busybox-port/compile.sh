@@ -9,13 +9,13 @@ make -j14;
 make install;
 
 # Copy lrzsz binaries if they exist
-if [ -f "../lrzsz/lrz" ] && [ -f "../lrzsz/lsz" ]; then
+if [ -f "../lrzsz/rz" ] && [ -f "../lrzsz/sz" ]; then
     echo "Copying lrzsz binaries..."
-    cp ../lrzsz/lrz ./_install/bin/lrz
-    cp ../lrzsz/lsz ./_install/bin/lsz
-    chmod +x ./_install/bin/lrz ./_install/bin/lsz
+    cp ../lrzsz/rz ./_install/bin/rz
+    cp ../lrzsz/sz ./_install/bin/sz
+    chmod +x ./_install/bin/rz ./_install/bin/sz
     echo "Stripping lrzsz binaries..."
-    "${CROSS_COMPILE}strip" ./_install/bin/lrz ./_install/bin/lsz
+    "${CROSS_COMPILE}strip" ./_install/bin/rz ./_install/bin/sz
 else
     echo "Warning: lrzsz binaries not found at ../lrzsz/"
 fi
