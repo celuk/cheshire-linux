@@ -25,9 +25,9 @@ mkdir -p dev proc sys etc/init.d;
 #sudo rm -rf dev/console dev/null;
 sudo mknod dev/console c 5 1;
 sudo mknod dev/null c 1 3;
+sudo mknod dev/ttyS0 c 4 64;
 
 echo '#!/bin/sh' > ./etc/init.d/rcS
-#echo 'exec setsid cttyhack /bin/sh' >> ./etc/init.d/rcS
 #echo 'mount -t devtmpfs devtmpfs /dev' >> ./etc/init.d/rcS
 echo 'mount -t proc none /proc' >> ./etc/init.d/rcS
 echo 'mount -t sysfs none /sys' >> ./etc/init.d/rcS
@@ -38,7 +38,8 @@ echo 'echo "##################################"' >> ./etc/init.d/rcS
 echo 'echo " "' >> ./etc/init.d/rcS
 echo 'echo "Starting shell..."' >> ./etc/init.d/rcS
 #echo 'ls -al' >> ./etc/init.d/rcS
-echo 'exec /bin/sh' >> ./etc/init.d/rcS
+#echo 'exec /bin/sh' >> ./etc/init.d/rcS
+echo 'exec setsid cttyhack /bin/sh' >> ./etc/init.d/rcS
 
 chmod +x ./etc/init.d/rcS;
 ln -s ./etc/init.d/rcS ./init;
