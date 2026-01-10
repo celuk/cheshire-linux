@@ -1,6 +1,6 @@
 /dts-v1/;
 
-/memreserve/ 0x80140000 0x00010000;
+// /memreserve/ 0x80140000 0x00010000;
 
 / {
 	#address-cells = <2>;
@@ -14,9 +14,10 @@
 	};
 
 	chosen {
-		bootargs = "console=hvc0 earlycon=sbi clk_ignore_unused";
+		bootargs = "console=hvc0 earlycon=sbi";
 		stdout-path = "serial0";
 	};
+  // bootargs = "console=hvc0 earlycon=sbi clk_ignore_unused";
 
 	// chosen: chosen {
     //   #address-cells = <2>;
@@ -50,7 +51,7 @@
 
 	memory@80000000 {
     	device_type = "memory";
-    	reg = <0x0 0x80000000 0x0 0x40000000>;
+    	reg = <0x0 0x80000000 0x0 0x0fffffff>;
   	};
 
 	soc: soc {
