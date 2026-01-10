@@ -9,14 +9,14 @@ make -j14;
 make install;
 
 # Copy lrzsz binaries if they exist
-if [ -f "../lrzsz/lrz" ] && [ -f "../lrzsz/lsz" ]; then
-    echo "Copying lrzsz binaries..."
-    cp ../lrzsz/lrz ./_install/bin/lrz
-    cp ../lrzsz/lsz ./_install/bin/lsz
-    chmod +x ./_install/bin/lrz ./_install/bin/lsz
-else
-    echo "Warning: lrzsz binaries not found at ../lrzsz/"
-fi
+# if [ -f "../lrzsz/lrz" ] && [ -f "../lrzsz/lsz" ]; then
+#     echo "Copying lrzsz binaries..."
+#     cp ../lrzsz/lrz ./_install/bin/lrz
+#     cp ../lrzsz/lsz ./_install/bin/lsz
+#     chmod +x ./_install/bin/lrz ./_install/bin/lsz
+# else
+#     echo "Warning: lrzsz binaries not found at ../lrzsz/"
+# fi
 
 cd _install;
 mkdir -p dev proc sys etc/init.d;
