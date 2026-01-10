@@ -42,4 +42,5 @@ echo 'exec /bin/sh' >> ./etc/init.d/rcS
 
 chmod +x ./etc/init.d/rcS;
 ln -s ./etc/init.d/rcS ./init;
-find . | cpio -H newc -o --owner root:root | gzip > ../rootfs.cpio.gz;
+# find . | cpio -H newc -o --owner root:root | gzip > ../rootfs.cpio.gz;
+find . | cpio -H newc -o --owner root:root > ../rootfs.cpio;
